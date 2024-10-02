@@ -6,8 +6,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export async function fetchFeed() {
     // console.log('fetching...')
     const vergeHeadlines = await getHeadlines('https://www.theverge.com/rss/index.xml');
-    const arsHeadlines: string[] = []; // await getHeadlines('https://feeds.arstechnica.com/arstechnica/index');
-    const ignHeadlines: string[] = []; // = await getHeadlines('https://feeds.feedburner.com/ign/news');
+    const arsHeadlines: string[] = await getHeadlines('https://feeds.arstechnica.com/arstechnica/index');
+    const ignHeadlines: string[] = await getHeadlines('https://feeds.feedburner.com/ign/news');
     // console.log(`headlines = ${headlines.join('\n')}`)
 
     const allHeadlines =[...vergeHeadlines, ...arsHeadlines, ...ignHeadlines]

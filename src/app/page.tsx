@@ -1,28 +1,33 @@
 import Image from "next/image";
 import { fetchFeed } from "./actions";
-import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import { Card, Divider, Typography } from "@mui/material";
 
 export default async function Home() {
   const rss = await fetchFeed()
   return (
     <div>
-    <Button variant="contained">Hello world</Button>
-          <div>{JSON.stringify(rss, null, 3)}</div>
-          <div>
-            <ol>
-            {rss['news'].map((topic) => (
-              <li key="{topic.title}">{topic.title}
-                <ul>
+      <div>
+      {rss['news'].map((topic) => (
+        <div key="{topic.title}">
+              <Divider key="{topic.title}">{topic.title}</Divider>
+              <List key="{topic.title}">
+
                   {topic.headlines.map((headline) => (
-                      <li key="{headline.title}"><a href={headline.url}>{headline.title}</a></li>
+                      <ListItem key="{headline.url}"><a href={headline.url}>{headline.title}</a></ListItem>
                   )
                 )}
-                </ul>
-              </li>
+                </List>
+                </div>
             ))
             }
-            </ol>
-          </div>
+      </div>
+
+            <Card variant="outlined" sx={{ m: 1.5, p: 1.5 }}>
+            <Typography variant="body2">{JSON.stringify(rss, null, 3)}</Typography>
+            </Card>
+            
         </div>
   );
 }

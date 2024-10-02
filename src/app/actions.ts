@@ -2,9 +2,18 @@
 
 import parse from "rss-to-json"
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { promises as fs } from 'fs';
+
+const realFetch = false;
 
 export async function fetchFeed() {
-    // console.log('fetching...')
+    if (!realFetch) {
+        console.log('returning prefetched sample data')
+        const file = await fs.readFile(process.cwd() + '/src/app/sample-gemini-response.json', 'utf8');
+        return JSON.parse(file);
+    }
+
+    console.log('fetching live data...')
     const vergeHeadlines = await getHeadlines('https://www.theverge.com/rss/index.xml');
     const arsHeadlines: string[] = await getHeadlines('https://feeds.arstechnica.com/arstechnica/index');
     const ignHeadlines: string[] = await getHeadlines('https://feeds.feedburner.com/ign/news');
